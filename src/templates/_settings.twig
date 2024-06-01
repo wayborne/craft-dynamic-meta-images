@@ -1,0 +1,103 @@
+{% extends '_layouts/cp' %}
+
+{% import '_includes/forms.twig' as forms %}
+
+{% set title = "Dynamic meta images"|t('dynamic-meta-images') %}
+{% set fullPageForm = true %}
+{% set sections = craft.app.entries.getAllSections() %}
+
+{% set crumbs = [] %}
+
+{% if craft.app.getIsMultiSite() %}
+    {% set crumbs = crumbs | unshift({
+        id: 'site-crumb',
+        icon: 'world',
+        label: requestedSite.name | t('site'),
+        menu: {
+            items: siteMenuItems(null, requestedSite),
+            label: 'Select site' | t('site')
+        },
+    }) %}
+{% endif %}
+
+
+{% block content %}
+    {% set configFile = config['multiSiteSettings'][currentSiteHandle] %}
+    <input type="hidden" name="action" value="dynamic-meta-images/settings/save">
+    <input type="hidden" name="pluginHandle" value="dynamic-meta-images">
+    {{
+      forms.hidden({
+        id:'currentSiteHandle',
+        name:'currentSiteHandle',
+        value:requestedSite.handle
+      })
+    }}
+    <div id="general">
+      {% if configFile %}
+        {{ tag('p', {
+            class: ['warning', 'with-icon'],
+            text: 'These settings might be overwritten, a config file detected.'|t('dynamic-meta-images'),
+        }) }}
+      {% endif %}
+      <div class="field">
+        <div class="heading">
+          <label>{{ 'Volume' | t('app') }}</label>
+        </div>
+        <div class="instructions">
+          <p>Volume your images will be saved to.</p>
+        </div>
+        {{ forms.volume({
+          first:true,
+          id: 'assetVolumeId',
+          name: 'siteSettings[assetVolumeId]',
+          warning: 'kaka'|markdown,
+          options:craft.cp.getVolumeOptions(),
+          addOptionLabel: 'Create a new volume…'|t('app'),
+          value: siteSettings.assetVolumeId ?? '',
+        }) }}
+      </div>
+      {% set rows = [] %}
+      {% set sections = craft.app.entries.getAllSections() %}
+      {% for section in sections %}
+          {% set sectionId = 'section-' ~ section.id %}
+          {% set templateName = siteSettings.sections[sectionId] ?? null %}
+          {% set row = {
+              id: sectionId,
+              name: section.name,
+              templateName: templateName
+          } %}
+          {% set rows = rows|merge([row]) %}
+      {% endfor %}
+      {{ forms.editableTableField({
+          label: "Section settings"|t('dynamic-meta-images'),
+          instructions: "Configure dynamic meta images per sections."|t('dynamic-meta-images'),
+
+          id: 'sections',
+          name: 'siteSettings[sections]',
+          cols: {
+              id: {
+                  type: 'hidden',
+                  heading: "ID",
+                  class:['hidden']
+              },
+              name: {
+                  type: 'heading',
+                  heading: "Section"|t('dynamic-meta-images'),
+                  thin:true
+              },
+              templateName: {
+                  type: 'template',
+                  heading: "Template"|t('dynamic-meta-images'),
+                  placeholder: "image-template",
+                  code: true,
+              }
+          },
+          rows: rows,
+          addRowLabel: "Add a section"|t('dynamic-meta-images'),
+          fullWidth: true,
+          allowAdd: false,
+          allowDelete: false,
+          allowReorder: false,
+      }) }}
+    </div>
+{% endblock %}
