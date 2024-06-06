@@ -22,7 +22,7 @@
 
 
 {% block content %}
-    {% set configFile = config['multiSiteSettings'][currentSiteHandle] %}
+    {% set configFile = config['multiSiteSettings'][currentSiteHandle] ?? null %}
     <input type="hidden" name="action" value="dynamic-meta-images/settings/save">
     <input type="hidden" name="pluginHandle" value="dynamic-meta-images">
     {{
