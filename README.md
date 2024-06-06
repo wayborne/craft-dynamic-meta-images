@@ -109,22 +109,21 @@ Using SEOmatic's existing api you can set the meta images:
 ... fallback
 {% endif %}
 ```
-
 [Source](https://nystudio107.com/docs/seomatic/advanced.html#variables)
 
 #### SEO fields
 Using SEO fields you can manually set the Facebook and Twitter image:
 ```twig
 {#-- Get the title --#}
-{% set image_name  = craft.slugify(entry.title) %}
+{% set image_name  = entry.id %}
 {#-- Check if the asset exists --#}
-{% set dynamic_meta_image =  craft.assets.title(image_name).one() ?? null  %}
-{% if  dynamic_meta_image %}
-    {#-- Set the meta image --#}
+{% set dynamic_meta_image =  craft.assets().fileName(image_name).one() ?? null  %}
+{#-- Set the meta image --#}
+{% if dynamic_meta_image %}
     {% do entry.setFacebookImage(dynamic_meta_image) %}
     {% do entry.setTwitterImage(dynamic_meta_image) %}
 {% else %}
-... fallback
+    ... fallback
 {% endif %}
 ```
 [Source](https://studioespresso.github.io/craft-seo-fields/templating.html)
