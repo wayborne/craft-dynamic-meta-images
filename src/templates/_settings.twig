@@ -4,25 +4,39 @@
 
 {% set title = "Dynamic meta images"|t('dynamic-meta-images') %}
 {% set fullPageForm = true %}
-{% set sections = craft.app.entries.getAllSections() %}
+{% set sections = craft.app.sections.getAllSections() %}
 
 {% set crumbs = [] %}
 
 {% if craft.app.getIsMultiSite() %}
-    {% set crumbs = crumbs | unshift({
+    {% set allSites = craft.app.sites.getAllSites() %}
+    {% set menuItems = [] %}
+    
+    {# Iterate through all sites to build menu items #}
+    {% for site in allSites %}
+        {% set menuItem = {
+            'id': 'site-' ~ site.id,
+            'label': site.name,
+            'url': site.baseUrl
+        } %}
+        {% set menuItems = menuItems|merge([menuItem]) %}
+    {% endfor %}
+    
+    {% set crumbs = crumbs|merge([{
         id: 'site-crumb',
         icon: 'world',
-        label: requestedSite.name | t('site'),
+        url:'https://google.com',
+        label: 'Select site'|t('site'),
         menu: {
-            items: siteMenuItems(null, requestedSite),
-            label: 'Select site' | t('site')
+            items: menuItems,
+            label: 'Select site'|t('site')
         },
-    }) %}
+    }]) %}
 {% endif %}
 
 
 {% block content %}
-    {% set configFile = config['multiSiteSettings'][currentSiteHandle] %}
+    {% set configFile = config['multiSiteSettings'][currentSiteHandle] ?? null %}
     <input type="hidden" name="action" value="dynamic-meta-images/settings/save">
     <input type="hidden" name="pluginHandle" value="dynamic-meta-images">
     {{
@@ -57,7 +71,6 @@
         }) }}
       </div>
       {% set rows = [] %}
-      {% set sections = craft.app.entries.getAllSections() %}
       {% for section in sections %}
           {% set sectionId = 'section-' ~ section.id %}
           {% set templateName = siteSettings.sections[sectionId] ?? null %}
