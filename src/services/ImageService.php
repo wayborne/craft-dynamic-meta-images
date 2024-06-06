@@ -22,7 +22,7 @@ class ImageService extends Component
 
 		$settings = DynamicMetaImages::$plugin->getSettings();
         $siteSettings = $settings->getSiteSettings($siteHandle);
-        $volumeId = $siteSettings['assetVolumeId'];
+        $volumeId = $siteSettings['volumeHandle'];
 		$filename = $entryId . '.png';
 		$title = $entryId;
 
