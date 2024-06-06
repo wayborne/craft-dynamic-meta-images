@@ -8,12 +8,12 @@ use craft\base\Model;
 
 class Settings extends Model
 {
-	public $multiSiteSettings = [];
+	public $sites = [];
 
     public function defineRules(): array
     {
         return [
-			['multiSiteSettings', 'each', 'rule' => ['validateSiteSettings']],
+			['sites', 'each', 'rule' => ['validateSiteSettings']],
         ];
     }
 
@@ -33,22 +33,22 @@ class Settings extends Model
                 }
 			}
 
-            if (isset($siteSettings['assetVolumeId']) && (!is_numeric($siteSettings['assetVolumeId']) || !Craft::$app->volumes->getVolumeById((int)$siteSettings['assetVolumeId']))) {
-                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume ID '{$siteSettings['assetVolumeId']}' for site ID {$siteHandle} does not exist or is not an integer.");
+            if (isset($siteSettings['volumeHandle']) && (!is_string($siteSettings['volumeHandle']) || !Craft::$app->volumes->getVolumeByHandle($siteSettings['volumeHandle']))) {
+                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume ID '{$siteSettings['volumeHandle']}' for site '{$siteHandle}' does not exist or is not an integer.");                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume ID '{$siteSettings['assetVolumeId']}' for site ID {$siteHandle} does not exist or is not an integer.");
             }
         }
 	}
 
 	public function getSiteSettings($siteHandle) {
-		$siteSettings = $this->multiSiteSettings[$siteHandle] ?? [];
+		$siteSettings = $this->sites[$siteHandle] ?? [];
 
 		return [
 			'sections' => $siteSettings['sections'] ?? [],
-			'assetVolumeId' => $siteSettings['assetVolumeId'] ?? null,
+			'volumeHandle' => $siteSettings['volumeHandle'] ?? null,
 		];
 	}
 
 	public function setSiteSettings($siteHandle, array $siteSettings) {
-        $this->multiSiteSettings[$siteHandle] = $siteSettings;
+        $this->sites[$siteHandle] = $siteSettings;
     }
 }

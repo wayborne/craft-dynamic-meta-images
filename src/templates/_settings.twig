@@ -36,7 +36,12 @@
 
 
 {% block content %}
-    {% set configFile = config['multiSiteSettings'][currentSiteHandle] ?? null %}
+ {% set configFile = config['sites'][currentSiteHandle] ?? null %}
+    {% set volumeId = null %}
+    {% if siteSettings.volumeHandle %}
+        {% set volume = craft.app.volumes.getVolumeByHandle(siteSettings.volumeHandle) ?? null %}
+        {% set volumeId = volume ? volume.id : null %}
+    {% endif %}
     <input type="hidden" name="action" value="dynamic-meta-images/settings/save">
     <input type="hidden" name="pluginHandle" value="dynamic-meta-images">
     {{
@@ -62,12 +67,11 @@
         </div>
         {{ forms.volume({
           first:true,
-          id: 'assetVolumeId',
-          name: 'siteSettings[assetVolumeId]',
-          warning: 'kaka'|markdown,
+          id: 'volumeHandle',
+          name: 'siteSettings[volumeHandle]',
           options:craft.cp.getVolumeOptions(),
           addOptionLabel: 'Create a new volume…'|t('app'),
-          value: siteSettings.assetVolumeId ?? '',
+          value: volumeId ?? '',
         }) }}
       </div>
       {% set rows = [] %}

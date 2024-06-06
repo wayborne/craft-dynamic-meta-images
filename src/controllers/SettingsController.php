@@ -48,8 +48,13 @@ class SettingsController extends Controller
 		$siteSettings = $settings->getSiteSettings($currentSiteHandle);
 
 		$siteSettings['sections'] = $postedSiteSettings['sections'];
-		$siteSettings['assetVolumeId'] = (int)$postedSiteSettings['assetVolumeId'];
 
+        $postedId= $postedSiteSettings['volumeHandle'];
+        $volume = Craft::$app->getVolumes()->getVolumeById($postedId);
+        
+        if($volume){
+            $siteSettings['volumeHandle'] = $volume['handle'];
+        }
 
 		$settings->setSiteSettings($currentSiteHandle, $siteSettings);
 
@@ -59,7 +64,7 @@ class SettingsController extends Controller
 			return $this->redirectToPostedUrl();
 		}
 
-		if (!Craft::$app->getPlugins()->savePluginSettings(DynamicMetaImages::$plugin, ['multiSiteSettings' => $settings->multiSiteSettings])) {
+		if (!Craft::$app->getPlugins()->savePluginSettings(DynamicMetaImages::$plugin, ['sites' => $settings->sites])) {
 			Craft::$app->getSession()->setError('Couldn’t save plugin settings.');
 			return $this->redirectToPostedUrl();
 		}
