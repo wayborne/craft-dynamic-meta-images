@@ -100,10 +100,11 @@ Using SEOmatic's existing api you can set the meta images:
 {#-- Get the title --#}
 {% set image_name  = entry.id %}
 {#-- Check if the asset exists --#}
-{% set dynamic_meta_image =  craft.assets.title(image_name).one() ?? null  %}
-{% if  dynamic_meta_image %}
+{% set dynamic_meta_image =  craft.assets().fileName(image_name).one() ?? null  %}
+{#-- Test for a public url --#}
+{% if  dynamic_meta_image.url %}
     {#-- Set the meta image --#}
-    {% do seomatic.meta.seoImage(dynamic_meta_image) %}
+    {% do seomatic.meta.seoImage(dynamic_meta_image.url) %}
 {% else %}
 ... fallback
 {% endif %}
