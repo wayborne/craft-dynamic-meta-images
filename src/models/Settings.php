@@ -34,7 +34,7 @@ class Settings extends Model
 			}
 
             if (isset($siteSettings['volumeHandle']) && (!is_string($siteSettings['volumeHandle']) || !Craft::$app->volumes->getVolumeByHandle($siteSettings['volumeHandle']))) {
-                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume ID '{$siteSettings['volumeHandle']}' for site '{$siteHandle}' does not exist or is not an integer.");                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume ID '{$siteSettings['assetVolumeId']}' for site ID {$siteHandle} does not exist or is not an integer.");
+                $this->addError("{$attribute}[{$siteHandle}]", "The specified asset volume handle '{$siteSettings['volumeHandle']}' for site '{$siteHandle}' does not exist or is not an integer.");                
             }
         }
 	}

@@ -36,7 +36,7 @@
 
 
 {% block content %}
- {% set configFile = config['sites'][currentSiteHandle] ?? null %}
+    {% set configFile = config['sites'][currentSiteHandle] ?? null %}
     {% set volumeId = null %}
     {% if siteSettings.volumeHandle %}
         {% set volume = craft.app.volumes.getVolumeByHandle(siteSettings.volumeHandle) ?? null %}

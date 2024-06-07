@@ -50,7 +50,7 @@ class SettingsController extends Controller
 		$siteSettings['sections'] = $postedSiteSettings['sections'];
 
         $postedId= $postedSiteSettings['volumeHandle'];
-        $volume = Craft::$app->getVolumes()->getVolumeById($postedId);
+        $volume = Craft::$app->getVolumes()->getVolumeById((int)$postedId);
         
         if($volume){
             $siteSettings['volumeHandle'] = $volume['handle'];

@@ -137,4 +137,9 @@ Using SEO fields you can manually set the Facebook and Twitter image:
 -- Check the queue logs for more info
 
 
+- I'm having issues running puppeteers on DDEV on an Apple Silicon device (Craft 5).
+From time to time, Apple Silicon DDEV users encounter an image or a Node.js package that is not available for the Mac’s native architecture (variously called ARM64 or aarch64). These result in errors like: “Could not open ‘/lib64/ld-linux-x86-64.so.2’: No such file or directory”.
+[Source](https://ddev.com/blog/amd64-on-apple-silicon-ddev/)
+
+
 Brought to you by [Wayborne](https://wayborne.com)
