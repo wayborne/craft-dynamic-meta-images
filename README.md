@@ -129,12 +129,30 @@ Using SEO fields you can manually set the Facebook and Twitter image:
 [Source](https://studioespresso.github.io/craft-seo-fields/templating.html)
 
 
-## Common issues
-- I can't find the path to my Node or NPM binary
-- Images aren't being generated: 
--- Make sure puppeteers is installed
--- Make sure the path to the Node binary & NPM binarycheck is correct
--- Check the queue logs for more info
+## Troubleshooting
 
+### I can't find the path to my Node or NPM binary
+For Node.js: Type which node (macOS/Linux) or where node (Windows) and press Enter. This will display the path to the Node.js binary.
+For npm: Type which npm (macOS/Linux) or where npm (Windows) and press Enter. This will display the path to the npm binary.
+### Images aren't being generated: 
+All image creation is being done in the queue logs so if you experience any issues, that's a good place to check. Make sure that:
+- Puppeteers is installed
+- The NODE_BINARY and NPM_BINARY is set
+
+
+To enable Puppeteer Headless Chrome support, add the following line to your `/.ddev/config.yaml` file:
+
+```yaml
+webimage_extra_packages: [ gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils ].
+```
+
+For Apple Silicon support, you will have to override that configuration by adding a config.m1.yaml file in your ddev folder along with the config.yaml one with the following content:
+```yaml
+webimage_extra_packages : [chromium]
+web_environment:
+- CPPFLAGS=-DPNG_ARM_NEON_OPT=0
+- PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+- PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+```
 
 Brought to you by [Wayborne](https://wayborne.com)
