@@ -96,19 +96,27 @@ class ImageService extends Component
         }
     }
 
-    private function renderTemplateFromEntryId(string $entryId, string $templateString)
-	{
-		$entry = Entry::find()->id($entryId)->one();
-		if (!$entry) {
-            Craft::error("Entry not found.\n", __METHOD__);
-			return null;
+    private function renderTemplateFromEntryId(string $entryId, string $templateString, string $siteHandle)
+    {
+        // Get the site based on the site handle
+        $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+        if (!$site) {
+            Craft::error("Site not found for handle: {$siteHandle}", __METHOD__);
+            return null;
         }
-
+        
+        // Find the entry in the specific site
+        $entry = Entry::find()->id($entryId)->siteId($site->id)->one();
+        if (!$entry) {
+            Craft::error("Entry not found for ID {$entryId} in site {$siteHandle}.", __METHOD__);
+            return null;
+        }
+    
         try {
-			Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
-			$html = Craft::$app->getView()->renderTemplate($templateString,['entry' => $entry]);
-			Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
-			return $html;
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
+            $html = Craft::$app->getView()->renderTemplate($templateString, ['entry' => $entry]);
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+            return $html;
         } catch (\Exception $e) {
             Craft::error('Failed to render template: ' . $e->getMessage(), __METHOD__);
             throw new Exception('Error rendering template.');
