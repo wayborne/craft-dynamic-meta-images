@@ -22,9 +22,18 @@ class ImageService extends Component
 
 		$settings = DynamicMetaImages::$plugin->getSettings();
         $siteSettings = $settings->getSiteSettings($siteHandle);
-        $volumeId = $siteSettings['volumeHandle'];
+        $volumeHandle = $siteSettings['volumeHandle'];
 		$filename = $entryId . '.png';
 		$title = $entryId;
+
+        $volume = Craft::$app->volumes->getVolumeByHandle($volumeHandle);
+        if (!$volume) {
+            throw new \Exception('No volume selected for saving images.');
+        }
+        $folder = Craft::$app->getAssets()->getRootFolderByVolumeId($volume->id);
+		if (!$folder) {
+			throw new Exception('Failed to get root folder for volume: ' . $volume->name);
+		}
 
 		preg_match('/<title>(.*?)<\/title>/s', $html, $matches);
 		if (!empty($matches[1])) {
@@ -33,14 +42,8 @@ class ImageService extends Component
 			$title = $title;
 		}
 
-        if (!$volumeId) {
-            throw new \Exception('No volume selected for saving images.');
-        }
-
         $tempPath = Craft::$app->getPath()->getTempPath() . '/' . $filename;
-        $folderId = $this->getFolderIdByVolumeId($volumeId);
-
-        $existingAsset = Asset::find()->filename($filename)->folderId($folderId)->one();
+        $existingAsset = Asset::find()->filename($filename)->folderId($folder->id)->one();
 
 		try {
 			Browsershot::html($html)
@@ -51,8 +54,6 @@ class ImageService extends Component
 				->setOption('args', ['--disable-web-security'])
 				->waitUntilNetworkIdle()
 				->save($tempPath);
-
-
 
 			if ($existingAsset) {
 				$existingAsset->tempFilePath = $tempPath;
@@ -70,10 +71,10 @@ class ImageService extends Component
 				$asset = new Asset();
 				$asset->tempFilePath = $tempPath;
 				$asset->filename = $filename;
-				$asset->folderId = $folderId;
+				$asset->folderId = $folder->id;
 				$asset->kind = "image";
 				$asset->title = $title;
-				$asset->setVolumeId($volumeId);
+				$asset->setVolumeId($volume->id);
 				$asset->setScenario(Asset::SCENARIO_CREATE);
 
 				$asset->validate();
@@ -94,21 +95,6 @@ class ImageService extends Component
             }
         }
     }
-
-	private function getFolderIdByVolumeId($volumeId)
-	{
-		$volume = Craft::$app->getVolumes()->getVolumeById($volumeId);
-		if (!$volume) {
-			throw new Exception('Failed to get volume for the given ID: ' . $volumeId);
-		}
-
-		$folder = Craft::$app->getAssets()->getRootFolderByVolumeId($volumeId);
-		if (!$folder) {
-			throw new Exception('Failed to get root folder for volume: ' . $volume->name);
-		}
-
-		return $folder->id;
-	}
 
     private function renderTemplateFromEntryId(string $entryId, string $templateString)
 	{
