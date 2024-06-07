@@ -6,33 +6,31 @@
 {% set fullPageForm = true %}
 {% set sections = craft.app.sections.getAllSections() %}
 
-{% set crumbs = [] %}
+{% set crumbs = [
+    { label: 'Settings' | t('app'), url: url('settings') }
+] %}
 
-{% if craft.app.getIsMultiSite() %}
-    {% set allSites = craft.app.sites.getAllSites() %}
-    {% set menuItems = [] %}
-    
-    {# Iterate through all sites to build menu items #}
-    {% for site in allSites %}
-        {% set menuItem = {
-            'id': 'site-' ~ site.id,
-            'label': site.name,
-            'url': site.baseUrl
-        } %}
-        {% set menuItems = menuItems|merge([menuItem]) %}
-    {% endfor %}
-    
-    {% set crumbs = crumbs|merge([{
-        id: 'site-crumb',
-        icon: 'world',
-        url:'https://google.com',
-        label: 'Select site'|t('site'),
-        menu: {
-            items: menuItems,
-            label: 'Select site'|t('site')
-        },
-    }]) %}
-{% endif %}
+
+{% set contextMenu %}
+    {% if craft.app.getIsMultiSite() %}
+        {% if craft.app.sites.getEditableSites()|length > 1 %}
+            <div id="sites-btn" class="btn menubtn" data-icon="world">{{ requestedSite.name }}</div>
+            <div class="menu">
+                <ul class="padded">
+                    {% for site in craft.app.sites.getEditableSites() %}
+                        <li>
+                            <a href="{{ url('settings/plugins/dynamic-meta-images/', {site: site.handle} ) }}"
+                                {% if site.handle == craft.app.request.getQueryParam('site') %}class="sel"{% endif %}>
+                                {{ site.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <input type="hidden" name="siteId" value="{{ currentSite.id }}">
+        {% endif %}
+    {% endif %}
+{% endset %}
 
 
 {% block content %}
