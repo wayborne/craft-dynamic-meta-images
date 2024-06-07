@@ -1,24 +1,18 @@
-# Dynamic meta images
-
+Dynamic meta images
 Dynamic meta images is a Craft CMS plugin that lets you generate dynamic meta images from your website's content.
 
-## Requirements
-
+Requirements
 This plugin requires Craft CMS 4.0 or 5.0 or later, and PHP 8.0 or later.
 
-## Installation
-
+Installation
 You can install this plugin from the Plugin Store or with Composer.
 
-### From the Plugin Store
-
+From the Plugin Store
 Go to the Plugin Store in your project’s Control Panel and search for “Dynamic meta images”. Then press “Install”.
 
-### With Composer
-
+With Composer
 Open your terminal and run the following commands:
 
-```bash
 # go to the project directory
 cd /path/to/project
 
@@ -27,59 +21,44 @@ composer require wayborne/dynamic-meta-images
 
 # tell Craft to install the plugin
 ./craft plugin/install dynamic-meta-images
-```
-
-### Additional steps
-
-#### Puppeteers 
+Additional steps
+Puppeteers
 This plugin requires you to install Puppeteers
 
-`npm i puppeteer`
+npm i puppeteer
 
-#### Node and NPM binary
-Create the following enviroment variables in your `.env` file to point at the Node and NPM binary
+Node and NPM binary
+Create the following enviroment variables in your .env file to point at the Node and NPM binary
 
-```bash
 NODE_BINARY="/usr/bin/node"
 NPM_BINARY="/usr/bin/npm"
-```
+Template folder
+When enabling the plugin a new folder is created in your template root folder with the name _dynamic-meta-images. Inside of it will also be a demo template demo.twig showcasing some techniques.
 
-#### Template folder
-When enabling the plugin a new folder is created in your template root folder with the name `_dynamic-meta-images`.
-Inside of it will also be a demo template `demo.twig` showcasing some techniques.
-
-## Usage
+Usage
 Dynamic meta images are being created from a twig/html template every time an entry gets saved. The template is rendered in a headless browser and an image is created and saved to a Craft asset sources.
 
+Options
+Enable/disable the image generation per section and per site
+Pick a template per section
+File naming
+By default the entry id will be used as file name. You can customize (per template) this by passing a title tag inside your template:
 
-### Options
-- Enable/disable the image generation per section and per site 
-- Pick a template per section
-
-### File naming
-By default the entry id will be used as file name. You can customize (per template) this by passing a `title` tag inside your template:
-```
 <title>{{ entry.title }}</title>
-```
+creates a new file:@ title-of-the-entry.png
 
-creates a new file:@
-`title-of-the-entry.png`
+Stytling the template
+You can style your templates however you want, however it's important that all of your styling resources (css/fonts/...) have a public url. That means that for local development it's easier to use some an existing CDN:
 
-### Stytling the template
-You can style your templates however you want, however it's important that all of your styling resources (css/fonts/...) have a public url.
-That means that for local development it's easier to use some an existing CDN:
-
-#### TailwindCSS
+TailwindCSS
 Include the following script to your header:
-```html
+
 <script src="https://cdn.tailwindcss.com"></script>
-```
 You can even pass it your local theme to overwrite your defeault:
 
-
-#### Fonts
+Fonts
 Any public CDN, for example google fonts:
-```
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
@@ -90,13 +69,10 @@ Any public CDN, for example google fonts:
     font-style: normal;
 }
 </style>
-```
-
-### Together with existing SEO plugins:
-
-#### SEOmatic
+Together with existing SEO plugins:
+SEOmatic
 Using SEOmatic's existing api you can set the meta images:
-```twig
+
 {#-- Get the title --#}
 {% set image_name  = entry.id %}
 {#-- Check if the asset exists --#}
@@ -108,12 +84,11 @@ Using SEOmatic's existing api you can set the meta images:
 {% else %}
 ... fallback
 {% endif %}
-```
-[Source](https://nystudio107.com/docs/seomatic/advanced.html#variables)
+Source
 
-#### SEO fields
+SEO fields
 Using SEO fields you can manually set the Facebook and Twitter image:
-```twig
+
 {#-- Get the title --#}
 {% set image_name  = entry.id %}
 {#-- Check if the asset exists --#}
@@ -125,21 +100,25 @@ Using SEO fields you can manually set the Facebook and Twitter image:
 {% else %}
     ... fallback
 {% endif %}
-```
-[Source](https://studioespresso.github.io/craft-seo-fields/templating.html)
+Source
 
+Troubleshooting
+I can't find the path to my Node or NPM binary
+For Node.js: Type which node (macOS/Linux) or where node (Windows) and press Enter. This will display the path to the Node.js binary. For npm: Type which npm (macOS/Linux) or where npm (Windows) and press Enter. This will display the path to the npm binary.
 
-## Common issues
-- I can't find the path to my Node or NPM binary
-- Images aren't being generated: 
--- Make sure puppeteers is installed
--- Make sure the path to the Node binary & NPM binarycheck is correct
--- Check the queue logs for more info
+Images aren't being generated:
+All image creation is being done in the queue logs so if you experience any issues, that's a good place to check. Make sure that:
 
+Puppeteers is installed
+The NODE_BINARY and NPM_BINARY is set
+To enable Puppeteer Headless Chrome support, add the following line to your /.ddev/config.yaml file:
 
-- I'm having issues running puppeteers on DDEV on an Apple Silicon device (Craft 5).
-From time to time, Apple Silicon DDEV users encounter an image or a Node.js package that is not available for the Mac’s native architecture (variously called ARM64 or aarch64). These result in errors like: “Could not open ‘/lib64/ld-linux-x86-64.so.2’: No such file or directory”.
-[Source](https://ddev.com/blog/amd64-on-apple-silicon-ddev/)
+webimage_extra_packages: [ gconf-service, libasound2, libatk1.0-0, libcairo2, libgconf-2-4, libgdk-pixbuf2.0-0, libgtk-3-0, libnspr4, libpango-1.0-0, libpangocairo-1.0-0, libx11-xcb1, libxcomposite1, libxcursor1, libxdamage1, libxfixes3, libxi6, libxrandr2, libxrender1, libxss1, libxtst6, fonts-liberation, libappindicator1, libnss3, xdg-utils ].
+For Apple Silicon support, you will have to override that configuration by adding a config.m1.yaml file in your ddev folder along with the config.yaml one with the following content:
 
-
-Brought to you by [Wayborne](https://wayborne.com)
+webimage_extra_packages : [chromium]
+web_environment:
+- CPPFLAGS=-DPNG_ARM_NEON_OPT=0
+- PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+- PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+Brought to you by Wayborne
