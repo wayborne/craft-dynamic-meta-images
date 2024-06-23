@@ -31,8 +31,8 @@ composer require wayborne/dynamic-meta-images
 
 ### Additional steps
 
-#### Puppeteers 
-This plugin requires you to install Puppeteers
+#### Puppeteer
+This plugin requires you to install Puppeteer
 
 `npm i puppeteer`
 
@@ -136,7 +136,7 @@ For Node.js: Type which node (macOS/Linux) or where node (Windows) and press Ent
 For npm: Type which npm (macOS/Linux) or where npm (Windows) and press Enter. This will display the path to the npm binary.
 ### Images aren't being generated: 
 All image creation is being done in the queue logs so if you experience any issues, that's a good place to check. Make sure that:
-- Puppeteers is installed
+- Puppeteer is installed
 - The NODE_BINARY and NPM_BINARY is set
 
 
