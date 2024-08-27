@@ -6,11 +6,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "keywords": [
-        "craft",
         "cms",
         "craftcms",
         "craft-plugin",
-        "dynamic meta images"
+        "dynamic-meta-images",
+        "meta-images",
+        "social-images",
+        "seo"
     ],
     "support": {
         "email": "support@wayborn.com",
@@ -18,7 +20,7 @@
         "source": "https://github.com/wayborn/dynamic-meta-images/",
         "docs": "https://github.com/wayborn/dynamic-meta-images/"
     },
-    "license": "MIT",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Wayborne",
