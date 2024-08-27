@@ -6,6 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "keywords": [
+        "craft",
         "cms",
         "craftcms",
         "craft-plugin",
