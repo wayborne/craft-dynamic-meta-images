@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
+    <path fill="#fff" d="M0 0h60v60H0z"/>
+    <path fill="#070000" stroke="#000" stroke-width=".5" d="M59.277 35.037H7.992V1.381h51.285v33.656Z"/>
+    <path fill="#070000" stroke="#000" stroke-width=".5" d="M55.972 38.343H4.686V4.686h51.286v33.657Z"/>
+    <path fill="#070000" stroke="#000" stroke-width=".5" d="M52.666 42.75H1.381V9.094h51.285V42.75Z"/>
+    <path fill="#070000" d="M8.109 24.857h15.352v.698H8.109zM8.109 29.044h18.143v.698H8.109zM8.109 20.67h19.539v.698H8.109z"/>
+    <path fill="#070000" stroke="#000" stroke-width=".5" d="M33.481 16.733h14.852v19.039H33.481z"/>
+    <path fill="#D9D9D9" stroke="#000" stroke-width=".5" d="M58.146 33.906H6.861V.25h51.285v33.656Z"/>
+    <path fill="#E8E7E7" stroke="#000" stroke-width=".5" d="M54.84 37.212H3.556V3.555h51.286v33.657Z"/>
+    <path fill="#fff" stroke="#000" stroke-width=".5" d="M51.535 41.619H.25V7.963h51.285v33.656Z"/>
+    <path fill="#000" d="M6.978 23.726H22.33v.698H6.978zM6.978 27.913h18.143v.698H6.978zM6.978 19.539h19.539v.698H6.978z"/>
+    <path stroke="#000" stroke-width=".5" d="M32.349 15.602h14.852v19.039H32.349z"/>
+</svg>
