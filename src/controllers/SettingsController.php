@@ -14,7 +14,12 @@ class SettingsController extends Controller
 	public function actionEdit(): ?Response
     {
 		$siteHandle = Craft::$app->request->getParam('site');
-		$currentSiteHandle = Craft::$app->getSites()->getSiteByHandle($siteHandle)->handle ?? Craft::$app->getSites()->getPrimarySite()->handle;
+        if ($siteHandle !== null) {
+            $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+        } else {
+            $site = null;
+        }        
+        $currentSiteHandle = $site ? $site->handle : Craft::$app->getSites()->getPrimarySite()->handle;
 
         $settings = DynamicMetaImages::$plugin->getSettings();
         $siteSettings = $settings->getSiteSettings($currentSiteHandle);
