@@ -3,8 +3,6 @@
     "description": "Create dynamic meta images with your entry's content",
     "type": "craft-plugin",
     "version": "4.0.0",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "keywords": [
         "craft",
         "cms",
