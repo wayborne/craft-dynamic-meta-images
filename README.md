@@ -92,6 +92,9 @@ Any public CDN, for example google fonts:
 </style>
 ```
 
+### Example templates
+You can find some examples in the plugin directory: `src/templates/examples/`
+
 ### Together with existing SEO plugins:
 
 #### SEOmatic

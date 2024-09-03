@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {# Tailwind CSS #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    {# Title tag will be used to name the file #}
+    <title>{{ entry.title }}</title>
+</head>
+<body class="min-w-screen min-h-screen bg-blue-400 p-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
+    <div class="text-white text-center max-w-[50%] z-10 inset-0">
+        <p class="text-[32px] mt-4 leading-none">Jason Joe</p>
+        <h1 class="font-black lowercase text-[60px] leading-none">{{ entry.title }}</h1>
+        <p class="mt-4 text-2xl">{{ entry.postDate|date('d M Y') }}</p>
+    </div>
+    <div class="absolute mx-auto text-white bottom-8 text-lg font-bold">Company logo</div>
+</body>
+</html>
