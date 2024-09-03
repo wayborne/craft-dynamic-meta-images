@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {# Tailwind CSS #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    {# Title tag will be used to name the file #}
+    <title>{{ entry.title }}</title>
+</head>
+<body class="min-w-screen min-h-screen bg-blue-400 p-12 flex items-center">
+    <div class="text-white text-left w-[50%] z-10 inset-0 pr-12">
+        <p class="text-[32px] mt-4 leading-none">Try it now</p>
+        <h1 class="font-black lowercase text-[60px] leading-none max-w-[80%]">{{ entry.title }}</h1>
+    </div>
+    <div class="w-[50%] z-10 inset-0 flex justify-end">
+        <img src="https://picsum.photos/600/800">
+    </div>
+    <div class="absolute mx-auto text-white bottom-8 text-2xl font-bold">Company logo</div>
+</body>
+</html>
