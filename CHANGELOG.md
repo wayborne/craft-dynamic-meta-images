@@ -1,4 +1,4 @@
 # Release Notes for Dynamic meta images
 
-## 1.0.0 - 2024-09-x
+## 5.0.0 - 2024-09-19
 - Initial release
