@@ -2,7 +2,7 @@
     "name": "wayborne/dynamic-meta-images",
     "description": "Create dynamic meta images with your entry's content",
     "type": "craft-plugin",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "keywords": [
         "craft",
         "cms",
