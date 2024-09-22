@@ -5,6 +5,7 @@ Dynamic meta images is a Craft CMS plugin that lets you generate dynamic meta im
 ## Requirements
 
 This plugin requires Craft CMS 4.0 or 5.0 or later, and PHP 8.0 or later.
+Additional requiremens are node, npm and puppeteers.
 
 ## Installation
 
@@ -45,16 +46,13 @@ NPM_BINARY="/usr/bin/npm"
 ```
 
 #### Template folder
-When enabling the plugin a new folder is created in your template root folder with the name `_dynamic-meta-images`.
-Inside of it will also be a demo template `demo.twig` showcasing some techniques.
+Create a new folder inside your templates folder (for example `_dynamic-meta-images`). Inside the plugins ('src/templates/examples`) you can find some example templates showcasing some techniques.
 
 ## Usage
 Dynamic meta images are being created from a twig/html template every time an entry gets saved. The template is rendered in a headless browser and an image is created and saved to a Craft asset sources.
 
-
 ### Options
-- Enable/disable the image generation per section and per site 
-- Pick a template per section
+- Pick a template per section: if you leave the template section empty, image generation is disabled for this section (per site)
 
 ### File naming
 By default the entry id will be used as file name. You can customize (per template) this by passing a `title` tag inside your template:
@@ -134,6 +132,8 @@ Using SEO fields you can manually set the Facebook and Twitter image:
 
 ## Troubleshooting
 
+### I'm not sure if Puppeteer is installed
+Run `npm list puppeteer` to see if it's listed there. You can also check your `package.json` file and see if `puppeteer` is listed under the dependencies and make sure `npm install` runs without any issues.
 ### I can't find the path to my Node or NPM binary
 For Node.js: Type which node (macOS/Linux) or where node (Windows) and press Enter. This will display the path to the Node.js binary.
 For npm: Type which npm (macOS/Linux) or where npm (Windows) and press Enter. This will display the path to the npm binary.
