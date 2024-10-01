@@ -63,7 +63,7 @@ By default the entry id will be used as file name. You can customize (per templa
 creates a new file:@
 `title-of-the-entry.png`
 
-### Stytling the template
+### Styling the template
 You can style your templates however you want, however it's important that all of your styling resources (css/fonts/...) have a public url.
 That means that for local development it's easier to use some an existing CDN:
 
@@ -134,6 +134,8 @@ Using SEO fields you can manually set the Facebook and Twitter image:
 
 ### I'm not sure if Puppeteer is installed
 Run `npm list puppeteer` to see if it's listed there. You can also check your `package.json` file and see if `puppeteer` is listed under the dependencies and make sure `npm install` runs without any issues.
+### I'm having trouble installing Puppeteer on Linux
+Following the official Puppeteer docs, here are all the required dependencies for Puppeteer to run on Linux: [https://pptr.dev/troubleshooting#chrome-doesnt-launch-on-linux](https://pptr.dev/troubleshooting#chrome-doesnt-launch-on-linux)
 ### I can't find the path to my Node or NPM binary
 For Node.js: Type which node (macOS/Linux) or where node (Windows) and press Enter. This will display the path to the Node.js binary.
 For npm: Type which npm (macOS/Linux) or where npm (Windows) and press Enter. This will display the path to the npm binary.
