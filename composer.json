@@ -15,9 +15,9 @@
     ],
     "support": {
         "email": "support@wayborn.com",
-        "issues": "https://github.com/wayborn/dynamic-meta-images/issues?state=open",
-        "source": "https://github.com/wayborn/dynamic-meta-images/",
-        "docs": "https://github.com/wayborn/dynamic-meta-images/"
+        "issues": "https://github.com/wayborn/craft-dynamic-meta-images/issues?state=open",
+        "source": "https://github.com/wayborn/craft-dynamic-meta-images/",
+        "docs": "https://github.com/wayborn/craft-dynamic-meta-images/"
     },
     "license": "proprietary",
     "authors": [
@@ -57,7 +57,7 @@
         "handle": "dynamic-meta-images",
         "description": "Create dynamic meta images with your entry's content",
         "developer": "Wayborne",
-        "documentationUrl": "https://github.com/wayborn/dynamic-meta-images/",
+        "documentationUrl": "https://github.com/wayborne/craft-dynamic-meta-images",
         "class": "wayborne\\dynamicmetaimages\\DynamicMetaImages"
     }
 }
