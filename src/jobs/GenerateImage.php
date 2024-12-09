@@ -16,6 +16,7 @@ class GenerateImage extends BaseJob
     public function execute($queue): void
     {
         if (!$this->entryId || !$this->templateString) {
+            Craft::error("Missing required parameters for image generation.", __METHOD__);
             return;
         }
 
@@ -24,13 +25,13 @@ class GenerateImage extends BaseJob
             $imageUrl = $imageService->generateImage($this->entryId, $this->templateString, $this->siteHandle);
 
             if (!$imageUrl) {
-                Craft::error("Image URL is empty. Image generation might have failed.", __METHOD__);
-                return;
+                Craft::warning("No image URL returned. This might be expected if asset creation failed.", __METHOD__);
+            } else {
+                Craft::info("Image generated successfully: $imageUrl", __METHOD__);
             }
-
-            Craft::info("Image generated successfully: $imageUrl", __METHOD__);
         } catch (Throwable $e) {
             Craft::error("Failed to generate image: {$e->getMessage()}", __METHOD__);
+            throw $e;
         }
     }
 

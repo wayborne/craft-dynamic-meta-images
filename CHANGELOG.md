@@ -1,5 +1,8 @@
 # Release Notes for Dynamic meta images
 
+## 4.0.2 - 2024-12-09
+- Fixed whitespace in title / file naming
+
 ## 4.0.1 - 2024-09-22
 - Fixed a missing html tag in the 1.twig example
 - Update the documentation
