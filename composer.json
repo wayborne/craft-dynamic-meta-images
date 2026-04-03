@@ -14,7 +14,7 @@
         "seo"
     ],
     "support": {
-        "email": "support@wayborn.com",
+        "email": "support@wayborne.com",
         "issues": "https://github.com/wayborn/craft-dynamic-meta-images/issues?state=open",
         "source": "https://github.com/wayborn/craft-dynamic-meta-images/",
         "docs": "https://github.com/wayborn/craft-dynamic-meta-images/"
@@ -23,7 +23,7 @@
     "authors": [
         {
             "name": "Wayborne",
-            "homepage": "https://www.wayborn.com"
+            "homepage": "https://www.wayborne.com"
         }
     ],
     "require": {
